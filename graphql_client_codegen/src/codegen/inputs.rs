@@ -1,6 +1,7 @@
 use super::shared::keyword_replace;
 use crate::{
     codegen_options::GraphQLClientCodegenOptions,
+    normalization::Normalization,
     query::{BoundQuery, UsedTypes},
     schema::input_is_recursive_without_indirection,
 };
@@ -40,8 +41,13 @@ pub(super) fn generate_input_object_definitions(
                 };
                 quote!(pub #name_ident: #field_type)
             });
+            let allow_non_snake_case = match options.normalization() {
+                Normalization::None => quote!(#[allow(non_snake_case)]),
+                Normalization::Rust => quote!(),
+            };
 
             quote! {
+                #allow_non_snake_case
                 #variable_derives
                 pub struct #struct_name {
                     #(#fields,)*
