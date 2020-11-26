@@ -64,7 +64,7 @@ pub(super) fn generate_enum_definitions<'a, 'schema: 'a>(
             }
 
             impl ::serde::Serialize for #name {
-                fn serialize<S: serde::Serializer>(&self, ser: S) -> Result<S::Ok, S::Error> {
+                fn serialize<S: ::serde::Serializer>(&self, ser: S) -> Result<S::Ok, S::Error> {
                     ser.serialize_str(match *self {
                         #(#constructors => #variant_str,)*
                         #name::Other(ref s) => &s,

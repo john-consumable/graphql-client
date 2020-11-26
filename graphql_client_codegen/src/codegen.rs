@@ -43,7 +43,7 @@ pub(crate) fn response_for_query(
         render_response_data_fields(operation_id, options, &query).render(&response_derives);
 
     let q = quote! {
-        use serde::{Serialize, Deserialize};
+        use ::serde::{Serialize, Deserialize};
         use super::*;
 
         #[allow(dead_code)]
